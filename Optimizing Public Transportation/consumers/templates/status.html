@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <title>CTA Status</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta http-equiv="refresh" content="10">
+  <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=ci8M8JmeKGl31noHAqdgkbraWB-7clRbULby57SlQNO6QG3MBSauqxGdIp6UUm_33nDBEe48bcOdE5ean2BeXE6HB3ZciUOXXRdoUdgMgd1Jt1EOAszjDeKdHIKvdKM_MwB6YwLA9YBec1duMr48HFt_6u79jnldKqBEI9fQhACfNaFzX6hNCkq9DCNOAHpnHgRbxYesK0JHcZdkWdj8kyE2LoHvSOphcmmQL-RMTLrFv5l9ufb3b0JEq9F9C6E2" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9yODk5NjU1YzkwOTcyOXhqdXB5dGVybDlvYjBubTV6LnVkYWNpdHktc3R1ZGVudC13b3Jrc3BhY2VzLmNvbS9maWxlcy9jb25zdW1lcnMvdGVtcGxhdGVzL3N0YXR1cy5odG1sP194c3JmPTJ8YzYxODU5YjF8NGQwOGE1YjAxNmY3ZWI2MjE3NWJhYjFjZTFlNjdmOGZ8MTYyMzAxOTUyNQ"/></head>
+  <body>
+    <div class="container-fluid">
+      <div class="row" style="padding: 2em">
+        <div class="col-10">
+          <b>Welcome to the CTA Status Page!</b>
+        </div>
+        <div>
+          {{ int(weather.temperature) }}° | {{ weather.status.title().replace("_", " ") }}
+        </div>
+      </div>
+      <div class="row" style="margin: 0px 20px 0px 20px">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Line</th>
+              <th scope="col">Station</th>
+              <th scope="col">Train Direction A</th>
+              <th scope="col">Train Direction B</th>
+              <th scope="col">Total Turnstile Entries</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for color, line in (("blue", lines.blue_line), ("green", lines.green_line), ("red", lines.red_line)) %}
+            {% for station in sorted(line.stations.values(), key=lambda x: x.order) %}
+            <tr>
+              <td style="background-color: {{ line.color_code }}">    </td>
+              <td>{{ station.station_name }}</td>
+              <td>{{ station.dir_a["train_id"] if station.dir_a is not None else "---" }}</td>
+              <td>{{ station.dir_b["train_id"] if station.dir_b is not None else "---" }}</td>
+              <td>{{ station.num_turnstile_entries }}</td>
+            </tr>
+            {% end %}
+            {% end %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
